@@ -21,7 +21,7 @@ namespace GerenciamentoFinanceiro.Data
                 new Categoria { CategoriaId = "salario", Nome = "Salário" },
                 new Categoria { CategoriaId = "viagem", Nome = "Viagem" },
                 new Categoria { CategoriaId = "mercado", Nome = "Mercado" },
-                new Categoria { CategoriaId = "Comissao", Nome = "Comissão" }
+                new Categoria { CategoriaId = "comissao", Nome = "Comissão" }
 
                 );
 

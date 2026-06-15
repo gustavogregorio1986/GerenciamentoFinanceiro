@@ -1,9 +1,81 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<Financeiro>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <button class="btn btn-success">Ola</button>
+<div class="container mt-5">
+    <!-- Botões superiores -->
+    <div class="text-center mb-4">
+        <a class="btn btn-success me-2">Adicionar - Transação</a>
+        <a class="btn btn-warning me-2">Adicionar - Categoria</a>
+        <a class="btn btn-info">Análise - Valores</a>
+    </div>
+
+    <!-- Linha com formulário e tabela -->
+    <div class="row align-items-start">
+        <!-- Coluna do formulário -->
+        <div class="col-md-4">
+            <form asp-action="Filtrar" asp-controller="Home" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Categoria:</label>
+                    <select name="filtro"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Categorias, "CategoriaId", "Nome", ViewBag.Filtros.CategoriaId))">
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Data da Operação:</label>
+                    <select name="filtro"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.DataOperacao, "Key", "Value", ViewBag.Filtros.DataOperacao))">
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Transação:</label>
+                    <select name="filtro"
+                            class="form-select"
+                            asp-items="@(new SelectList(ViewBag.Transacoes, "TransacaoId", "Nome", ViewBag.Filtros.TransacaoId))">
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-2">Filtrar</button>
+                <a asp-action="Index" asp-route-id="" class="btn btn-secondary w-100">Limpar</a>
+            </form>
+        </div>
+
+        <!-- Coluna da tabela -->
+        <div class="col-md-8">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Categoria</th>
+                        <th>Data Operação</th>
+                        <th>Transação</th>
+                        <th>Valor</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Financeiro financa in Model)
+                    {
+                        <tr>
+                            <td>@financa.Descricao</td>
+                            <td>@financa.Categoria.Nome</td>
+                            <td>@financa.DataDaOperacao.ToString("dd/MM/yyyy")</td>
+                            <td class="fw-bold @(financa.Transacao.Nome == "Ganho" ? "text-success" : "text-danger")">
+                                @financa.Transacao.Nome
+                            </td>
+                            <td>R$ @financa.Valor.ToString("F")</td>
+                            <td>
+                                <a class="btn btn-danger btn-sm">Remover</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
