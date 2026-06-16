@@ -25,10 +25,12 @@ namespace GerenciamentoFinanceiro.Controllers
             ViewBag.Transacoes = _context.Transacoes.ToList();
             ViewBag.DataOperacao = Filtros.ValoresDataOperacao;
 
+            // Consulta base
             IQueryable<Financeiro> consulta = _context.Financas
                 .Include(x => x.Transacao)
                 .Include(x => x.Categoria);
 
+            // Aplicação dos filtros somente se existirem
             if (filtros.TemCategoria)
                 consulta = consulta.Where(c => c.CategoriaId == filtros.CategoriaId);
 
@@ -49,16 +51,18 @@ namespace GerenciamentoFinanceiro.Controllers
                     consulta = consulta.Where(c => c.DataDaOperacao == hoje);
             }
 
+            // Executa a query
             var financas = consulta.OrderBy(d => d.DataDaOperacao).ToList();
 
-            Console.WriteLine("Total registros: " + financas.Count);
-            foreach (var f in financas)
-            {
-                Console.WriteLine($"{f.Descricao} - {f.Valor} - {f.CategoriaId} - {f.TransacaoId}");
-            }
+            return View(_context.Financas.ToList());
+        }
 
+        public IActionResult AdicionarTransacao()
+        {
+            ViewBag.Categorias = _context.Categorias.ToList();
+            ViewBag.Transacoes = _context.Transacoes.ToList();
 
-            return View(financas);
+            return View();
         }
 
         [HttpPost]
@@ -68,6 +72,27 @@ namespace GerenciamentoFinanceiro.Controllers
 
             string id = string.Join("-", filtro);
             return RedirectToAction("Index", new { ID = id});
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarTransacao(Financeiro financeiro)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Financas.Add(financeiro);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Categorias = _context.Categorias.ToList();
+                ViewBag.Transacoes = _context.Transacoes.ToList();
+
+                return View(financeiro);
+            }
+
+
         }
     }
 }

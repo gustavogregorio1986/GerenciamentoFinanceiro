@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Financeiro>
+﻿@model IEnumerable<GerenciamentoFinanceiro.Models.Financeiro>
+<p>Total registros: @Model.Count()</p>
 
 <div class="container mt-5">
     <!-- Botões superiores -->
     <div class="text-center mb-4">
-        <a class="btn btn-success me-2">Adicionar - Transação</a>
+        <a asp-action="AdicionarTransacao" asp-controller="Home" class="btn btn-success me-2">Adicionar - Transação</a>
         <a class="btn btn-warning me-2">Adicionar - Categoria</a>
         <a class="btn btn-info">Análise - Valores</a>
     </div>
@@ -59,7 +60,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Financeiro financa in Model)
+                    @foreach (var financa in Model)
                     {
                         <tr>
                             <td>@financa.Descricao</td>
