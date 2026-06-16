@@ -60,5 +60,14 @@ namespace GerenciamentoFinanceiro.Controllers
 
             return View(financas);
         }
+
+        [HttpPost]
+        public IActionResult Filtrar(string[] filtro)
+        {
+
+
+            string id = string.Join("-", filtro);
+            return RedirectToAction("Index", new { ID = id});
+        }
     }
 }
