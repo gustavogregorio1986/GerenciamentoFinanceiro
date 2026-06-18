@@ -1,0 +1,78 @@
+﻿@model List<RegistrosFinanceiros>
+
+<div class="row mt-5">
+    <h2>Ganhos</h2>
+    <a asp-action="Index" class="btn btn-info w-100 mb-5">voltar</a>
+
+    <div class="col-md-4">
+        <table class="table table-bordered mt-2">
+            <thead class="table-dark">
+                <tr>
+                    <th>Categoria</th>
+                    <th>Transação</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ganho in Model.Where(x => x.TransacaoNome == "Ganho"))
+                {
+                    <tr>
+                        <td>@ganho.CategoriaNome</td>
+                        <td>@ganho.TransacaoNome</td>
+                        <td>@ganho.ValorCategoria</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <h2>Gastos</h2>
+    <div class="col-md-4">
+        <table class="table table-bordered mt-2">
+            <thead class="table-dark">
+                <tr>
+                    <th>Categoria</th>
+                    <th>Transação</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gasto in Model.Where(x => x.TransacaoNome == "Gastos"))
+                {
+                    <tr>
+                        <td>@gasto.CategoriaNome</td>
+                        <td>@gasto.TransacaoNome</td>
+                        <td>@gasto.ValorCategoria</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <h2>Totais</h2>
+    <div class="col-md-4">
+        <table class="table table-bordered mt-2">
+            <thead class="table-dark">
+                <tr>
+                    <th>Categoria</th>
+                    <th>Transação</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.CategoriaNome</td>
+                        <td>@item.TransacaoNome</td>
+                        <td>@item.ValorCategoria</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
