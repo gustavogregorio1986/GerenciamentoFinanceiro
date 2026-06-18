@@ -74,6 +74,42 @@ namespace GerenciamentoFinanceiro.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public IActionResult AdicionarCategoria()
+        {
+            var categoria = new Categoria 
+            {  
+                CategoriaId = "categoria"
+            };
+
+
+            return View(categoria);
+        }
+
+        [HttpPost]
+        public IActionResult AdicionarCategoria(Categoria categoria)
+        {
+            if (ModelState.IsValid)
+            {
+                var categoriaBanco = new Categoria
+                {
+                    CategoriaId = categoria.Nome.ToLower(),
+                    Nome = categoria.Nome,
+                };
+
+                _context.Categorias.Add(categoriaBanco);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(categoria);
+            }
+            
+        }
+
+
         [HttpPost]
         public IActionResult Filtrar(string[] filtro)
         {
