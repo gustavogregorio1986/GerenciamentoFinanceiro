@@ -65,6 +65,15 @@ namespace GerenciamentoFinanceiro.Controllers
             return View();
         }
 
+        public IActionResult RemoverTransacao(int id)
+        {
+            var financa = _context.Financas.Find(id);
+
+            _context.Remove(financa);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public IActionResult Filtrar(string[] filtro)
         {

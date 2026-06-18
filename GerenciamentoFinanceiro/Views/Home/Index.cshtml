@@ -56,7 +56,7 @@
                         <th>Data Operação</th>
                         <th>Transação</th>
                         <th>Valor</th>
-                        <th></th>
+                        <th class="w-25"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                             </td>
                             <td>R$ @financa.Valor.ToString("F")</td>
                             <td>
-                                <a class="btn btn-danger btn-sm">Remover</a>
+                                <a asp-action="RemoverTransacao" asp-controller="Home" asp-route-id="@financa.Id" class="btn btn-danger btn-sm">Remover</a>
                             </td>
                         </tr>
                     }
